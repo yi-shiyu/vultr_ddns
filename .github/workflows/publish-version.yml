@@ -7,7 +7,7 @@ on:
 env:
   APP_NAME: vultr_ddns
   DOCKERHUB_REPO: evlan/vultr_ddns
-  APP_VERSION: ${{ github.ref }}
+  APP_VERSION: ${{ github.ref_name }}
 
 jobs:
   pulish-docker-images:
