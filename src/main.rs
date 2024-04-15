@@ -9,7 +9,7 @@ use reqwest::{Client, header, StatusCode};
 use tokio::time::{sleep, Duration};
 use serde::Deserialize;
 use serde_json::{Number, Value};
-use serde_json::Value::{Number as Nu, String as Js};
+use serde_json::Value::{Number as Nu, String as Str};
 
 #[derive(Parser, Debug)]
 #[command(version, about, long_about = None)]
@@ -70,9 +70,9 @@ impl Vultr {
 
     async fn create_record(&self, ip: &str) -> Result<(String, StatusCode), Box<dyn Error>> {
         let mut map: HashMap<&str, Value> = HashMap::new();
-        map.insert("type", Js("A".to_string()));
-        map.insert("name", Js(self.args.domain_head.to_string()));
-        map.insert("data", Js(ip.to_string()));
+        map.insert("type", Str("A".to_string()));
+        map.insert("name", Str(self.args.domain_head.to_string()));
+        map.insert("data", Str(ip.to_string()));
         map.insert("ttl", Nu(Number::from(self.args.ttl)));
         map.insert("priority", Nu(Number::from(0)));
 
@@ -89,8 +89,8 @@ impl Vultr {
 
     async fn update_record(&self, record_id: &str, ip: &str) -> Result<(String, StatusCode), Box<dyn Error>> {
         let mut map: HashMap<&str, Value> = HashMap::new();
-        map.insert("name", Js(self.args.domain_head.to_string()));
-        map.insert("data", Js(ip.to_string()));
+        map.insert("name", Str(self.args.domain_head.to_string()));
+        map.insert("data", Str(ip.to_string()));
         map.insert("ttl", Nu(Number::from(self.args.ttl)));
         map.insert("priority", Nu(Number::from(0)));
 
