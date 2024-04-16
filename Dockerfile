@@ -1,17 +1,15 @@
-FROM rust:bookworm AS builder
+FROM rust:alpine AS builder
 
 WORKDIR /usr/src/myapp
 
 COPY . .
 
-ENV RUSTFLAGS='-C linker=x86_64-linux-gnu-gcc'
-
-RUN apt -y update && apt install -y musl-tools musl-dev gcc build-essential make libssl-dev libffi-dev libpq-dev autoconf libtool pkg-config && rustup target add x86_64-unknown-linux-musl && cargo build --target x86_64-unknown-linux-musl --release
+RUN apk update && apk add musl musl-dev && cargo build --release
 
 FROM alpine:latest
 
 WORKDIR /usr/src/myapp
 
-COPY --from=builder /usr/src/myapp/target/x86_64-unknown-linux-musl/release/vultr_ddns .
+COPY --from=builder /usr/src/myapp/target/release/vultr_ddns .
 
 ENTRYPOINT ["./vultr_ddns"]
