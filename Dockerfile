@@ -4,7 +4,7 @@ WORKDIR /usr/src/myapp
 
 COPY . .
 
-RUN apt update && apt install -y musl-tools && rustup update && rustup target add x86_64-unknown-linux-musl && cargo build --target x86_64-unknown-linux-musl --release
+RUN apt update && apt install -y musl-tools && rustup target add x86_64-unknown-linux-musl && cargo build --target x86_64-unknown-linux-musl --release
 
 FROM alpine:latest
 
