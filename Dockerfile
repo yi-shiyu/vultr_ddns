@@ -6,7 +6,7 @@ COPY . .
 
 ENV RUSTFLAGS='-C linker=x86_64-linux-gnu-gcc'
 
-RUN apt -y update && apt install -y musl-tools musl-dev && rustup target add x86_64-unknown-linux-musl && cargo build --target x86_64-unknown-linux-musl --release
+RUN apt -y update && apt install -y musl-tools musl-dev gcc build-essential make libssl-dev libffi-dev libpq-dev autoconf libtool pkg-config && rustup target add x86_64-unknown-linux-musl && cargo build --target x86_64-unknown-linux-musl --release
 
 FROM alpine:latest
 
